@@ -1,0 +1,36 @@
+public class Screensht { 
+static WebDriver driver;
+static TakesScreenshot ts; 
+static String path; static File src;
+static File dest;
+static void takesnapshot(String filename) throws IOException {
+dest =  new File(path+filename); 
+src = ts.getScreenshotAs(OutputType.FILE); 
+FileUtils.copyFile(src,dest);  } 
+static void takesnapshotElement(String filename) throws IOException { 
+WebElement table = driver.findElement(By.cssSelector(".bd-example")); 
+dest =  new File(path+filename); 
+src = table.getScreenshotAs(OutputType.FILE);  
+FileUtils.copyFile(src,dest);
+}      
+static void log(String logfile,String message) throws SecurityException, IOException { 
+logfile= "C:\\Users\\THIRISHA\\eclipse-workspace\\SelePgn\\Logs\\file.log";   
+Logger log = Logger.getLogger(Screensht.class.getName());  
+FileHandler fh = new FileHandler(logfile,false);
+fh.setFormatter(new SimpleFormatter());   
+log.addHandler(fh);   
+log.info(message);    
+}   
+public static void main(String[] args) throws IOException {
+path = "C:\\Users\\THIRISHA\\eclipse-workspace\\SelePgn\\screenshot\\";   
+driver = new ChromeDriver();   
+driver.manage().window().maximize();
+driver.get("https://www.tutorialspoint.com/selenium/practice/webtables.php");   
+ts = (TakesScreenshot)driver;      //Screenshot of entire page   
+takesnapshot("snap3.png");  
+//Screenshot of only the table takesnapshotElement("table.png"); //log
+log("logfile","Website opened successfully" );
+log("logfile","Screenshot taken successfully" ); 
+log("logfile","Table Screenshot taken successfully" ); 
+}
+}  
